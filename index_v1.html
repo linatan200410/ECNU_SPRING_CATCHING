@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 静态站点入口：逻辑 app_v1.js，配置 config_v1.json；本地需 HTTP 服务打开，详见 README.md -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>华东师大实地寻宝 - 建筑会说话</title>
+    
+    <link rel="stylesheet" href="style_v1.css">
+</head>
+<body>
+    <header id="top-navbar">
+        <img src="assets/images/ecnu_logo.png" alt="华东师大Logo" class="navbar-logo">
+        🌸 华东师大春日校园巡礼
+    </header>
+    <div id="privacy-modal">
+        <div style="background: #fff; width: 85%; max-width: 400px; border-radius: 12px; padding: 24px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <h2 style="color: #800000; margin-top: 0; margin-bottom: 16px;">📍 开启华师大实地寻宝</h2>
+            
+            <p style="font-size: 14px; color: #555; text-align: left; line-height: 1.6; margin-bottom: 20px;">
+                为了触发实地彩蛋，我们需要获取您的当前位置。<br><br>
+                <strong>🛡️ 隐私承诺：</strong><br>
+                所有的定位比对均在您的手机本地完成，本网页<strong>绝对不会</strong>收集、上传或保存您的任何真实轨迹数据！请放心授权。
+            </p>
+
+            <button id="btn-agree" style="width: 100%; padding: 12px; background: #800000; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; margin-bottom: 12px; cursor: pointer; transition: background 0.3s;">
+                同意授权并开始寻宝
+            </button>
+            
+            <button id="btn-manual" style="width: 100%; padding: 12px; background: #f0f0f0; color: #666; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; transition: background 0.3s;">
+                拒绝，我只想纯手动点击浏览
+            </button>
+        </div>
+    </div>
+
+    <div id="map-wrapper">
+        <div id="map-container">
+            <img src="assets/images/map.jpg" id="campus-map-img" alt="华师大地图">
+        </div>
+    </div>
+
+    <div id="progress-badge" style="position: fixed; top: 75px; right: 20px; background: rgba(128, 0, 0, 0.9); color: white; padding: 10px 15px; border-radius: 20px; font-weight: bold; z-index: 500; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+        碎片收集: <span id="fragment-count">0</span>/<span id="fragment-total">0</span>
+    </div>
+    <!-- [DEV] 坐标拾取器入口 — 正式展示时隐藏，开发者可将下方注释解开使用
+    <button id="toggle-picker-btn" type="button">坐标拾取已开启</button>
+    <div id="coord-picker-panel">
+        <div class="picker-title">视图坐标拾取器</div>
+        <select id="picker-node-select"></select>
+        <div id="picker-readout">点击地图任意位置，拾取当前节点的 view_coords。</div>
+        <textarea id="picker-snippet" readonly></textarea>
+        <div class="picker-actions">
+            <button id="copy-picker-btn" type="button">复制片段</button>
+            <button id="apply-picker-btn" type="button">应用预览</button>
+        </div>
+    </div>
+    -->
+    <button id="toggle-sakura-btn" style="position: fixed; top: 122px; right: 20px; background: rgba(255,255,255,0.92); color: #800000; border: 1px solid #800000; border-radius: 16px; padding: 6px 10px; font-size: 12px; font-weight: bold; z-index: 520; cursor: pointer;">
+        关闭特效
+    </button>
+    <div id="toast-container"></div>
+
+    <div id="bottom-drawer" style="display: none;">
+        
+        <span id="close-drawer-btn">×</span>
+
+        <div class="hero-image-container">
+            <img id="npc-image" src="" alt="地点代表图">
+            <div id="image-dots"></div>
+        </div>
+
+        <div class="drawer-content">
+            <img id="npc-cute-image" src="" alt="地点形象" style="display: none;">
+            <div class="drawer-scroll-content">
+                <h3 id="npc-name">加载中...</h3>
+                
+                <div class="modal-story">
+                    <p id="npc-story">剧情加载中...</p>
+                </div>
+                
+                <div id="riddle-section" style="display: none;">
+                    <p id="riddle-question" class="question-text">谜语加载中...</p>
+                    <div id="riddle-options" class="options-container">
+                        </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div id="win-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; text-align: center;">
+        <div style="background: white; width: 85%; max-width: 400px; padding: 30px; border-radius: 20px; border: 5px solid #FFD700; box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);">
+            <h1 style="color: #800000; margin-top: 0; margin-bottom: 15px;">🎉 恭喜你！</h1>
+            <p style="font-size: 16px; line-height: 1.6; color: #333; margin-bottom: 20px;">
+                你已集齐全部 <span id="win-total">0</span> 个碎片，<br>解锁了华东师大春日美景！
+            </p>
+            
+            <div style="margin: 20px 0; background: #fff1f1; padding: 15px; border-radius: 10px;">
+                <p style="color: #800000; font-weight: bold; margin: 0 0 5px 0;">🎁 兑奖凭证</p>
+                <p style="font-size: 13px; color: #666; margin: 0;">凭此界面截图，即可获得精彩礼物一份</p>
+            </div>
+            
+            <button id="btn-restart-journey" onclick="location.reload()" style="width: 100%; padding: 12px; background: #800000; color: white; border: none; border-radius: 25px; font-weight: bold; font-size: 16px; cursor: pointer;">
+                重新开启旅程
+            </button>
+            <button id="btn-restart-clear" style="width: 100%; padding: 11px; background: #fff; color: #800000; border: 1px solid #800000; border-radius: 25px; font-weight: bold; font-size: 14px; cursor: pointer; margin-top: 10px;">
+                重新开始（清空进度）
+            </button>
+        </div>
+    </div>
+
+    <script src="app_v1.js"></script> 
+</body>
+</html>

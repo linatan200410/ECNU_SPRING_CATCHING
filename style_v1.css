@@ -1,0 +1,624 @@
+/* 基础重置，适配手机端 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-image: url('assets/images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #333;
+    overflow-x: hidden; /* 防止水平滚动 */
+}
+
+:root {
+    --nav-base-height: 55px;
+    --nav-safe-top: env(safe-area-inset-top, 0px);
+    --nav-total-height: calc(var(--nav-base-height) + var(--nav-safe-top));
+}
+/* ==========================================
+   隐私授权弹窗样式 (让它悬浮全屏并居中)
+   ========================================== */
+#privacy-modal {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8); /* 黑色半透明背景 */
+    z-index: 9999; /* 保证它在屏幕的最最最顶层 */
+    justify-content: center;
+    align-items: center;
+}
+/* ==========================================
+   全新：底部抽屉互动面板样式及滑入动画
+   ========================================== */
+/* ==========================================
+   全新：沉浸式全屏分屏面板样式
+   ========================================== */
+#bottom-drawer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh; /* 手机上跟随动态视口，桌面端保持兼容 */
+    background: #f5f5f5;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column; /* 让内部元素上下排布 */
+    
+    /* 初始在屏幕下方，滑入动画 */
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+#bottom-drawer.active {
+    transform: translateY(0);
+}
+
+/* 悬浮在图片右上角的关闭按钮 */
+#close-drawer-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.5); /* 半透明黑底，防止图片太白看不清按钮 */
+    color: white;
+    border-radius: 50%;
+    font-size: 26px;
+    line-height: 34px; 
+    text-align: center;
+    cursor: pointer;
+    z-index: 1010;
+    font-weight: bold;
+}
+
+/* --- 上半部分：代表图 --- */
+.hero-image-container {
+    width: 100%;
+    height: 40vh;
+    flex-shrink: 0;
+    background: #e0e0e0;
+    position: relative;
+}
+
+#npc-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.4s ease;
+}
+
+#image-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 20;
+}
+
+.image-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.8);
+    transition: background 0.3s;
+}
+
+.image-dot.active {
+    background: #fff;
+}
+
+/* --- 下半部分：内容区 --- */
+.drawer-content {
+    flex-grow: 1; /* 占据剩下的所有空间 */
+    background: #fff;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    margin-top: -8px;
+    padding: 64px 18px 20px;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+    max-height: 48vh;
+    overflow: visible;
+    position: relative;
+    z-index: 10;
+}
+
+.drawer-scroll-content {
+    max-height: calc(48vh - 84px);
+    overflow-y: auto;
+    padding-right: 2px;
+}
+
+#npc-cute-image {
+    position: absolute;
+    right: 14px;
+    top: -84px;
+    width: 108px;
+    max-width: 32vw;
+    height: auto;
+    z-index: 14;
+    pointer-events: none;
+    filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.16));
+}
+
+#npc-name {
+    color: #800000;
+    font-size: 22px;
+    margin-top: 0;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.modal-story p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+    background: #f9f9f9;
+    padding: 13px;
+    border-radius: 12px;
+    margin-bottom: 14px;
+}
+
+.question-text {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.options-container { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px; 
+}
+
+.option-btn { 
+    background: #fff; 
+    border: 2px solid #800000; 
+    color: #800000; 
+    padding: 12px; 
+    border-radius: 10px; 
+    font-size: 15px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    transition: all 0.2s; 
+}
+
+.option-btn:hover { 
+    background: #800000; 
+    color: #fff; 
+}
+
+.guide-close-btn {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 13px;
+    background: #800000;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.guide-close-btn:active {
+    opacity: 0.75;
+}
+/* 关闭按钮已在上方统一定义，此处废弃的旧定义已移除 */
+
+/* NPC 头像和故事区域保持美观 */
+.drawer-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+.drawer-header img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    background-color: #f0f0f0;
+}
+.drawer-header h3 {
+    color: #800000;
+    margin: 0;
+    font-size: 18px;
+}
+.modal-story p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+/* 谜语选项区域保持原有样式 */
+.question-text { font-weight: bold; color: #333; margin-bottom: 12px; font-size: 15px; }
+.options-container { display: flex; flex-direction: column; gap: 10px; }
+.option-btn { background: #fff; border: 2px solid #800000; color: #800000; padding: 10px; border-radius: 8px; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+.option-btn:hover { background: #800000; color: #fff; }
+
+/* 胜利徽章的抖动动效 */
+.bump { transform: scale(1.2); }
+/* 地图容器：核心区域 */
+/* 1. 外层包装区：负责占满剩余屏幕，并把里面的地图居中 */
+#map-wrapper {
+    width: 100%;
+    height: calc(100vh - var(--nav-total-height));
+    height: calc(100dvh - var(--nav-total-height));
+    margin-top: var(--nav-total-height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; /* 让鼠标事件穿透 wrapper */
+}
+
+/* 2. 核心地图容器：它的尺寸会“严丝合缝”地包裹住里面的图片 */
+#map-container {
+    position: relative; 
+    pointer-events: auto; /* 恢复内部元素的点击 */
+    /* 注意：这里什么宽高度都不写，靠里面的 img 自动撑开它！ */
+}
+
+/* 3. 真正的地图图片：限制最大宽高，确保在任何手机上都能完整显示 */
+#campus-map-img {
+    max-width: 100vw;
+    max-height: calc(100vh - var(--nav-total-height));
+    max-height: calc(100dvh - var(--nav-total-height));
+    display: block; /* 消除图片底部的隐形间隙 */
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15); /* 给地图加个高级阴影，让它像悬浮在樱花上一样 */
+}
+
+#toggle-picker-btn {
+    position: fixed;
+    top: 75px;
+    left: 20px;
+    background: rgba(255,255,255,0.94);
+    color: #800000;
+    border: 1px solid #800000;
+    border-radius: 16px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 520;
+    cursor: pointer;
+}
+
+#coord-picker-panel {
+    position: fixed;
+    top: 116px;
+    left: 20px;
+    width: min(320px, calc(100vw - 40px));
+    background: rgba(255,255,255,0.96);
+    border: 1px solid rgba(128,0,0,0.2);
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+    z-index: 520;
+    backdrop-filter: blur(8px);
+}
+
+#coord-picker-panel.hidden {
+    display: none;
+}
+
+.picker-title {
+    color: #800000;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+#picker-node-select,
+#picker-snippet,
+#copy-picker-btn,
+#apply-picker-btn {
+    width: 100%;
+}
+
+#picker-node-select,
+#picker-snippet {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 13px;
+    background: #fff;
+}
+
+#picker-node-select {
+    margin-bottom: 8px;
+}
+
+#picker-readout {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+#picker-snippet {
+    min-height: 74px;
+    resize: none;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.picker-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+#copy-picker-btn,
+#apply-picker-btn {
+    background: #800000;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#apply-picker-btn {
+    background: #d84b6b;
+}
+
+.coord-pick-marker {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #ff4d4f;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    pointer-events: none;
+    box-shadow: 0 0 0 4px rgba(255,77,79,0.18);
+}
+
+.coord-pick-marker::before,
+.coord-pick-marker::after {
+    content: '';
+    position: absolute;
+    background: #ff4d4f;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.coord-pick-marker::before {
+    width: 2px;
+    height: 30px;
+}
+
+.coord-pick-marker::after {
+    width: 30px;
+    height: 2px;
+}
+
+
+/* 建筑节点图标 */
+.map-node {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    background-color: #fff;
+    border: 2px solid #800000; /* 华师大红 */
+    border-radius: 50%;
+    transform: translate(-50%, -50%); /* 确保坐标点在图标正中心 */
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #800000;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    z-index: 2;
+}
+.map-node:active {
+    transform: translate(-50%, -50%) scale(0.92);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+}
+
+/* 用户实时位置的“小红点” */
+#user-location-dot {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #007AFF; /* 蓝色定位点更符合用户直觉 */
+    border: 2px solid #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    display: none; /* 默认隐藏，获取到定位后显示 */
+    box-shadow: 0 0 10px rgba(0, 122, 255, 0.8);
+    animation: pulse 2s infinite; /* 呼吸灯动画 */
+}
+
+/* 呼吸灯动画效果 */
+@keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 0 0 rgba(0, 122, 255, 0.7); }
+    70% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 10px rgba(0, 122, 255, 0); }
+    100% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 0 0 rgba(0, 122, 255, 0); }
+}
+
+#progress-badge {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+/* 当数字变化时抖动一下，增加交互感 */
+.bump {
+    transform: scale(1.2);
+}
+/* ==========================================
+   全局特效：春季樱花飘落
+   ========================================== */
+.sakura-petal {
+    position: fixed; /* 悬浮在屏幕固定位置 */
+    background-color: #ffb7c5; /* 经典的樱花粉色 */
+    border-radius: 15px 0 15px 0; /* 模拟花瓣的不规则形状 */
+    opacity: 0.7; /* 微微半透明 */
+    pointer-events: none; /* 绝对关键：让花瓣变成“幽灵”，鼠标点击会直接穿透它！ */
+    z-index: 800; /* 层级在地图之上，但在弹窗之下 */
+    animation: fall linear infinite; /* 匀速下落动画 */
+}
+
+/* 定义花瓣从屏幕上方飘落到下方，并带有旋转侧风的动画 */
+@keyframes fall {
+    0% {
+        top: -10%; /* 从屏幕上方外面一点开始 */
+        transform: translateX(0) rotate(0deg) scale(1);
+    }
+    100% {
+        top: 110vh; /* 彻底落出屏幕底部 */
+        transform: translateX(120px) rotate(360deg) scale(0.8); /* 带着风向往右飘，并且旋转和轻微缩小 */
+    }
+}
+/* ==========================================
+   顶部导航栏样式 (华师红到樱花粉的渐变)
+   ========================================== */
+/* ==========================================
+   顶部导航栏样式 (加入Logo及左对齐排版)
+   ========================================== */
+#top-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-total-height);
+    
+    /* 高级感拉满的渐变色：左边是华师大红，右边过渡到春日粉 */
+    background: linear-gradient(135deg, #800000 0%, #d84b6b 100%); 
+    
+    color: white;
+    display: flex;
+    align-items: center;
+    
+    /* 👇 关键修改 1：把 center 改成 flex-start，让内容靠左排列 */
+    justify-content: flex-start; 
+    /* 👇 关键修改 2：增加左侧内边距，让 Logo 不会死死贴住屏幕最左边 */
+    padding-top: var(--nav-safe-top);
+    padding-left: calc(15px + env(safe-area-inset-left, 0px));
+    padding-right: calc(12px + env(safe-area-inset-right, 0px));
+    
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px; /* 让字间距稍微宽一点，更好看 */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1500; /* 确保它盖在樱花和地图的上面 */
+}
+
+/* ==========================================
+   新增：配合顶栏的圆形 Logo 样式
+   ========================================== */
+.navbar-logo {
+    width: 34px;  /* Logo 的宽度 */
+    height: 34px; /* Logo 的高度，比导航栏稍微小一点点 */
+    border-radius: 50%; /* 直接把正方形图片裁切成正圆形 */
+    border: 2px solid white; /* 加上精致的白色描边，和红底彻底区分开 */
+    background: #fff;
+    padding: 2px;
+    margin-right: 12px; /* 和右边的标题文字拉开一点呼吸空间 */
+    object-fit: cover; /* 保证图片铺满且绝对不会被拉伸变形 */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* 加一点微微的阴影，增加立体感 */
+}
+
+button,
+.map-node,
+#close-drawer-btn {
+    -webkit-tap-highlight-color: transparent;
+}
+
+#toast-container {
+    position: fixed;
+    top: 75px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    z-index: 1800;
+    pointer-events: none;
+}
+
+.toast {
+    max-width: min(88vw, 340px);
+    background: rgba(20, 20, 20, 0.88);
+    color: #fff;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .map-node {
+        width: 48px;
+        height: 48px;
+        font-size: 14px;
+    }
+
+    #close-drawer-btn {
+        width: 42px;
+        height: 42px;
+        line-height: 40px;
+        font-size: 28px;
+    }
+
+    .option-btn,
+    .guide-close-btn,
+    #btn-agree,
+    #btn-manual,
+    #btn-restart-journey,
+    #btn-restart-clear {
+        min-height: 48px !important;
+        padding: 14px 16px !important;
+        font-size: 16px !important;
+    }
+
+    #btn-manual,
+    #btn-restart-clear {
+        font-size: 15px !important;
+    }
+
+    .options-container {
+        gap: 14px;
+    }
+
+    #toggle-sakura-btn {
+        min-height: 40px;
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+        border-radius: 18px !important;
+    }
+}

@@ -1,0 +1,127 @@
+{
+  "project_config": {
+    "name": "丽娃河畔的低语 —— 导游与寻宝",
+    "total_fragments_needed": 5,
+    "theme_color": "#800000",
+    "trigger_radius_meters": 30,
+    "map_calibration": {
+      "top_left": { "lat": 31.032615, "lng": 121.437010 },
+      "bottom_right": { "lat": 31.018690, "lng": 121.446005 }
+    }
+  },
+  "nodes": [
+    {
+      "id": "bld_guide_01",
+      "type": "guide",
+      "name": "校门口北门石碑",
+      "view_coords": { "x": 65.8, "y": 12.2 },
+      "trigger_coords": { "lat": 31.020817, "lng": 121.443517 },
+      "assets": {
+        "illustrated_images": ["assets/images/placeholder_scene.svg"],
+        "audio_narration": ""
+      },
+      "guide_messages": {
+        "intro": "欢迎来到华东师大。很多同学第一次在这里停下脚步，都会和这块石碑合影。它像一枚安静的书签，标记着校园故事的第一页。"
+      }
+    },
+    {
+      "id": "bld_guide_02",
+      "type": "guide",
+      "name": "大夏路",
+      "view_coords": { "x": 58.4, "y": 34.8 },
+      "trigger_coords": { "lat": 31.029122, "lng": 121.442195 },
+      "assets": {
+        "illustrated_images": ["assets/images/大夏路.jpg"],
+        "audio_narration": ""
+      },
+      "guide_messages": {
+        "intro": "华东师大最早名为\"大夏书院\"，大夏路旁的樱花与梧桐交织，构成了四季流转的校园风景。"
+      }
+    },
+    {
+      "id": "bld_treasure_01",
+      "type": "treasure",
+      "name": "第二教学楼",
+      "view_coords": { "x": 56.2, "y": 40.7 },
+      "trigger_coords": { "lat": 31.026485, "lng": 121.443195 },
+      "assets": {
+        "illustrated_images": ["assets/images/第二教学楼.jpg"],
+        "audio_narration": ""
+      },
+      "story_snippet": "我是校园里的\"老爷爷\"，看透了半个多世纪的晨跑与寒暑。其实我偶尔也想跳个广场舞，就是地基太沉了...",
+      "riddle_data": {
+        "question": "春天是属于我的季节。如果你想在课间休息时，透过二楼的窗户欣赏到绝美的樱花，你应该来找谁",
+        "options": ["第一教学楼", "第二教学楼", "第三教学楼", "第四教学楼"],
+        "correct_answer_index": 1
+      }
+    },
+    {
+      "id": "bld_treasure_02",
+      "type": "treasure",
+      "name": "图书馆",
+      "view_coords": { "x": 41.7, "y": 58.0 },
+      "trigger_coords": { "lat": 31.025270, "lng": 121.441465 },
+      "assets": {
+        "illustrated_images": ["assets/images/图书馆1.jpg", "assets/images/图书馆2.jpg"],
+        "audio_narration": ""
+      },
+      "story_snippet": "别在我的怀里偷偷补觉啦，你的梦话我都录进馆藏索引里了哦！",
+      "riddle_data": {
+        "question": "学校把我分成了两份，一边是圆圆的，叫\"主楼\"，另一边是长长的，叫\"裙楼\"，如果你想借阅书籍，你会去哪个楼",
+        "options": ["裙楼", "主楼", "主裙楼都可以", "两个楼都不可以"],
+        "correct_answer_index": 0
+      }
+    },
+    {
+      "id": "bld_treasure_03",
+      "type": "treasure",
+      "name": "大学生活动中心",
+      "view_coords": { "x": 68.3, "y": 36.6 },
+      "trigger_coords": { "lat": 31.029132, "lng": 121.443531 },
+      "assets": {
+        "illustrated_images": ["assets/images/大学生活动中心.jpg"],
+        "audio_narration": ""
+      },
+      "story_snippet": "这是一个学校文化活动的重要场所，或者只是想找个地方放松一下，它都可以容纳你",
+      "riddle_data": {
+        "question": "我外围有一排樱花树相伴，如果你想去逛逛便利店、打印资料，或者去心理咨询中心聊聊心事，都可以来找我。我是哪里？",
+        "options": ["冬日餐厅", "校医院", "实验楼B楼", "大学生活动中心"],
+        "correct_answer_index": 3
+      }
+    },
+    {
+      "id": "bld_treasure_04",
+      "type": "treasure",
+      "name": "冬月食堂",
+      "view_coords": { "x": 45.5, "y": 21.0 },
+      "trigger_coords": { "lat": 31.030560, "lng": 121.439537 },
+      "assets": {
+        "illustrated_images": ["assets/images/冬月厅.jpg"],
+        "audio_narration": ""
+      },
+      "story_snippet": "每天都有新生来找我合影，我虽然只是一块石头，但我的分量可是全校最重的！",
+      "riddle_data": {
+        "question": "我是离本科生8号宿舍楼最近的干饭胜地。如果你在 2020 年以前来过这里，你一定知道我曾叫\"河东食堂\"，猜猜我现在叫什么？",
+        "options": ["夏雨厅","秋林阁","冬月厅","秋实阁"],
+        "correct_answer_index": 2
+      }
+    },
+    {
+      "id": "bld_treasure_05",
+      "type": "treasure",
+      "name": "东操场",
+      "view_coords": { "x": 81.7, "y": 36.1 },
+      "trigger_coords": { "lat": 31.030101, "lng": 121.442985 },
+      "assets": {
+        "illustrated_images": ["assets/images/东操场.jpg"],
+        "audio_narration": ""
+      },
+      "story_snippet": "我是其中的一片操场。",
+      "riddle_data": {
+        "question": "我们学校有两个操场。但每当举办盛大的开学典礼或者是激烈的校运会时，大家都会齐聚在我的地盘。我是？",
+        "options": ["西操场", "东操场", "南操场", "北操场"],
+        "correct_answer_index": 1
+      }
+    }
+  ]
+}
