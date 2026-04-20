@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="title desc">
+  <title id="title">ؤ`M�</title>
+  <desc id="desc">(�,0KՄؤ�G`MD�</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7e8ea"/>
+      <stop offset="100%" stop-color="#f2f4f8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <circle cx="655" cy="88" r="36" fill="#ffd9a8" opacity="0.9"/>
+  <path d="M0 320 C150 260 250 360 400 315 C540 275 645 345 800 295 L800 450 L0 450 Z" fill="#d8b4c0" opacity="0.9"/>
+  <path d="M0 346 C130 302 250 376 390 342 C530 308 650 382 800 334 L800 450 L0 450 Z" fill="#c9d7c1" opacity="0.95"/>
+  <rect x="286" y="178" width="228" height="154" rx="12" fill="#ffffff" opacity="0.92" stroke="#800000" stroke-opacity="0.15"/>
+  <rect x="316" y="204" width="168" height="20" rx="10" fill="#800000" opacity="0.12"/>
+  <rect x="328" y="242" width="60" height="70" rx="6" fill="#800000" opacity="0.18"/>
+  <rect x="412" y="242" width="60" height="70" rx="6" fill="#800000" opacity="0.18"/>
+  <text x="400" y="116" text-anchor="middle" font-size="28" font-family="Arial, Helvetica, sans-serif" fill="#800000" font-weight="700">
+    N'%��<
+  </text>
+  <text x="400" y="383" text-anchor="middle" font-size="22" font-family="Arial, Helvetica, sans-serif" fill="#6b7280">
+    ؤ,0`M�
+  </text>
+</svg>
