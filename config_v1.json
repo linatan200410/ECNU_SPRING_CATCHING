@@ -17,7 +17,7 @@
       "view_coords": { "x": 65.8, "y": 12.2 },
       "trigger_coords": { "lat": 31.020817, "lng": 121.443517 },
       "assets": {
-        "illustrated_images": ["assets/images/placeholder_scene.svg"],
+        "illustrated_images": ["assets/images/石碑.jpg"],
         "audio_narration": ""
       },
       "guide_messages": {
